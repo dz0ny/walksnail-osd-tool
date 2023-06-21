@@ -30,6 +30,7 @@ pub struct RenderSettings {
     pub upscale: bool,
     pub use_chroma_key: bool,
     pub chroma_key: [f32; 3],
+    pub fps30: bool,
     pub container: Container,
     pub selected_container_idx: usize,
 }
@@ -49,6 +50,7 @@ impl Default for RenderSettings {
             upscale: false,
             use_chroma_key: false,
             chroma_key: [1.0 / 255.0, 177.0 / 255.0, 64.0 / 255.0],
+            fps30: false,
             container: Container::MOV,
             selected_container_idx: 0,
         }

@@ -44,6 +44,7 @@ pub fn start_video_render(
         &render_settings.encoder,
         output_video,
         render_settings.upscale,
+        render_settings.fps30,
     )?;
 
     // Channels to communicate with ffmpeg handler thread
@@ -120,6 +121,7 @@ pub fn spawn_encoder(
     video_encoder: &Encoder,
     output_video: &PathBuf,
     upscale: bool,
+    fps30: bool,
 ) -> Result<FfmpegChild, io::Error> {
     let mut encoder_command = FfmpegCommand::new_with_path(ffmpeg_path);
 
@@ -133,6 +135,10 @@ pub fn spawn_encoder(
 
     if upscale {
         encoder_command.args(["-vf", "scale=2560x1440:flags=bicubic"]);
+    }
+
+    if fps30 {
+        encoder_command.args(["-filter:v", "fps=30"]);
     }
 
     encoder_command
