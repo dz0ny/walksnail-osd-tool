@@ -1,6 +1,25 @@
+use std::fmt::Display;
+
 use serde::{Deserialize, Serialize};
 
 use crate::ffmpeg::{Codec, Encoder};
+
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub enum Container {
+    MOV,
+    MKV,
+    MP4,
+}
+impl Display for Container {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Container::MOV => write!(f, ".mov"),
+            Container::MP4 => write!(f, ".mp4"),
+            Container::MKV => write!(f, ".mkv"),
+        }
+    }
+}
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct RenderSettings {
@@ -11,6 +30,8 @@ pub struct RenderSettings {
     pub upscale: bool,
     pub use_chroma_key: bool,
     pub chroma_key: [f32; 3],
+    pub container: Container,
+    pub selected_container_idx: usize,
 }
 
 impl Default for RenderSettings {
@@ -28,6 +49,7 @@ impl Default for RenderSettings {
             upscale: false,
             use_chroma_key: false,
             chroma_key: [1.0 / 255.0, 177.0 / 255.0, 64.0 / 255.0],
+            container: Container::MOV,
+            selected_container_idx: 0,
         }
     }
-}

@@ -17,6 +17,22 @@ impl Display for Codec {
         }
     }
 }
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+pub enum Container {
+    MP4,
+    MKV,
+    MOV,
+}
+
+impl Display for Container {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Container::MP4 => write!(f, "mp4"),
+            Container::MKV => write!(f, "mkv"),
+            Container::MOV => write!(f, "mov"),
+        }
+    }
+}
 
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct Encoder {

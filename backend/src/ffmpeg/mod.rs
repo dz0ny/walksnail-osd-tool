@@ -11,4 +11,5 @@ pub use encoders::{Codec, Encoder};
 pub use message::{FromFfmpegMessage, ToFfmpegMessage};
 pub use render::{handle_decoder_events, start_video_render};
 pub use render_settings::RenderSettings;
+pub use render_settings::Container;
 pub use video_info::VideoInfo;

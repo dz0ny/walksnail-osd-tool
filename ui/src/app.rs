@@ -5,7 +5,7 @@ use std::{
 
 use backend::{
     config::AppConfig,
-    ffmpeg::{Encoder, FromFfmpegMessage, RenderSettings, ToFfmpegMessage, VideoInfo},
+    ffmpeg::{Encoder, Container, FromFfmpegMessage, RenderSettings, ToFfmpegMessage, VideoInfo},
     font::{self, FontFile},
     osd::{OsdFile, OsdOptions},
     srt::{SrtFile, SrtOptions},
@@ -37,6 +37,7 @@ pub struct WalksnailOsdTool {
     pub from_ffmpeg_receiver: Option<Receiver<FromFfmpegMessage>>,
     pub render_status: RenderStatus,
     pub encoders: Vec<Encoder>,
+    pub containers: Vec<Container>,
     pub dependencies: Dependencies,
     pub render_settings: RenderSettings,
     pub osd_preview: OsdPreview,
@@ -90,6 +91,7 @@ impl WalksnailOsdTool {
                 ffprobe_path,
             },
             encoders,
+            containers: vec![Container::MP4, Container::MKV, Container::MOV],
             srt_font: Some(srt_font),
             osd_options,
             srt_options,

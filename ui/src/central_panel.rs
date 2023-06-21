@@ -337,6 +337,10 @@ impl WalksnailOsdTool {
                     .iter()
                     .filter(|e| self.render_settings.show_undetected_encoders || e.detected)
                     .collect::<Vec<_>>();
+                let selectable_containers = self
+                    .containers
+                    .iter()
+                    .collect::<Vec<_>>();
 
                 Grid::new("render_options")
                     .min_col_width(self.ui_dimensions.options_column1_width)
@@ -369,6 +373,28 @@ impl WalksnailOsdTool {
                                     self.render_settings.encoder =
                                         (*selectable_encoders.first().unwrap()).clone();
                                     changed |= true;
+                            }
+                        });
+                        ui.end_row();
+                        ui.label("Container")
+                            .on_hover_text(tooltip_text("Container used for video."));
+                        ui.horizontal(|ui| {
+                            let selection = egui::ComboBox::from_id_source("container").width(80.0).show_index(
+                                ui,
+                                &mut self.render_settings.selected_container_idx,
+                                selectable_containers.len(),
+                                |i| {
+                                    selectable_containers
+                                        .get(i)
+                                        .map(|e| e.to_string())
+                                        .unwrap_or(".mp4".to_string())
+                                },
+                            );
+                            if selection.changed() {
+                                // This is a little hacky but it's nice to have a single struct that keeps track of all render settings
+                                self.render_settings.container =
+                                    (*selectable_containers.get(self.render_settings.selected_container_idx).unwrap()).clone();
+                                changed |= true;
                             }
                         });
                         ui.end_row();
