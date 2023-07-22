@@ -4,7 +4,6 @@ use serde::{Deserialize, Serialize};
 
 use crate::ffmpeg::{Codec, Encoder};
 
-
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum Container {
     MOV,
@@ -51,7 +50,8 @@ impl Default for RenderSettings {
             use_chroma_key: false,
             chroma_key: [1.0 / 255.0, 177.0 / 255.0, 64.0 / 255.0],
             fps30: false,
-            container: Container::MOV,
+            container: Container::MKV,
             selected_container_idx: 0,
         }
     }
+}

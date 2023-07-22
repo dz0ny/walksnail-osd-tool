@@ -56,10 +56,11 @@ impl WalksnailOsdTool {
                     } else {
                         1.0
                     };
+                    let container = self.render_settings.container.clone();
                     match start_video_render(
                         &self.dependencies.ffmpeg_path,
                         video_path,
-                        &get_output_video_path(out_path, video_path),
+                        &get_output_video_path(out_path, video_path, container),
                         osd_file.frames.clone(),
                         srt_file.frames.clone(),
                         font_file.clone(),
@@ -125,7 +126,8 @@ impl WalksnailOsdTool {
                 ui.vertical(|ui| {
                     if let (Some(out_path), Some(input_video_path)) = (&self.out_path, &self.video_file)
                     {
-                        let out = &get_output_video_path(out_path, input_video_path);
+                        let container = self.render_settings.container.clone();
+                        let out = &get_output_video_path(out_path, input_video_path, container);
                         let path = out.as_path().to_string_lossy();
                         let name: String = out.file_name().unwrap().to_string_lossy().into();
                         ui.hyperlink_to( name, path);

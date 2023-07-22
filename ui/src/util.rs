@@ -4,7 +4,7 @@ use std::{
     time::{Duration, Instant},
 };
 
-use backend::{config::AppConfig, ffmpeg::VideoInfo, font::FontFile, osd::OsdFile, srt::SrtFile};
+use backend::{config::AppConfig, ffmpeg::{VideoInfo, Container}, font::FontFile, osd::OsdFile, srt::SrtFile};
 use egui::{FontFamily, FontId, Margin, RichText, Separator, TextStyle, Ui};
 use github_release_check::{GitHubReleaseItem, LookupError};
 use semver::Version;
@@ -106,9 +106,9 @@ pub fn format_minutes_seconds(duration: &Duration) -> String {
     format!("{}:{:0>2}", minutes, seconds)
 }
 
-pub fn get_output_video_path(out_video_path:  &Path, input_video_path: &Path) -> PathBuf {
+pub fn get_output_video_path(out_video_path:  &Path, input_video_path: &Path, container: Container) -> PathBuf {
     let input_video_file_name = input_video_path.file_stem().unwrap().to_string_lossy();
-    let output_video_file_name = format!("{}_with_osd.mp4", input_video_file_name);
+    let output_video_file_name = format!("{}_with_osd{}", input_video_file_name, container.to_string());
     let mut output_video_path = out_video_path.to_path_buf();
     output_video_path.push(output_video_file_name);
     output_video_path

@@ -412,7 +412,8 @@ impl WalksnailOsdTool {
                             changed |= ui.add(Checkbox::without_text(&mut self.render_settings.use_chroma_key)).changed();
                             changed |= ui.color_edit_button_rgb(&mut self.render_settings.chroma_key).changed();
                         });
-
+                        ui.end_row();
+                        
                         ui.label("Limit to 30fps").on_hover_text(tooltip_text("Make the output video 30fps to get smaller size after uploading to YouTube."));
                         changed|= ui.add(Checkbox::without_text(&mut self.render_settings.fps30)).changed();
                         ui.end_row();
